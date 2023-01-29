@@ -1,3 +1,4 @@
 dataset_dir: "../datasets/ours_default_data" # path to the dataset directory with 'train' and 'valid' subdirs.
 train_data:
   random_rotation: true # randomly rotate training data about the gravity axis.
+storage_dir: "../storage/ours_default_data" # the storage dir stores outputs, all checkpoints and summaries. 

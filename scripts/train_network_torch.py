@@ -43,6 +43,7 @@ def main():
     train_dir = os.path.splitext(
         os.path.basename(__file__))[0] + '_' + os.path.splitext(
             os.path.basename(args.cfg))[0]
+    train_dir = os.path.join(cfg['storage_dir'], train_dir)
 
     val_files = sorted(glob(os.path.join(cfg['dataset_dir'], 'valid', '*.zst')))
     train_files = sorted(
@@ -190,7 +191,7 @@ def main():
                 trainer.summary_writer.add_scalar('eval/' + k, v,
                                                   trainer.current_step)
 
-    torch.save({'model': model.state_dict()}, 'model_weights.pt')
+    torch.save({'model': model.state_dict()}, os.path.join(train_dir, 'model_weights.pt'))
     if trainer.current_step == train_params.max_iter:
         return trainer.STATUS_TRAINING_FINISHED
     else:
