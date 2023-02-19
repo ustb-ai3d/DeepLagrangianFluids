@@ -33,11 +33,18 @@ def write_particles(path_without_ext, pos, vel=None, options=None):
 
 def run_sim_tf(trainscript_module, weights_path, scene, num_steps, output_dir,
                options):
-
+    import tensorflow as tf
     # init the network
     model = trainscript_module.create_model()
-    model.init()
-    model.load_weights(weights_path, by_name=True)
+    if weights_path.endswith('.index'):
+        checkpoint = tf.train.Checkpoint(step=tf.Variable(0), model=model)
+        checkpoint.restore(
+            os.path.splitext(weights_path)[0]).expect_partial()
+    elif weights_path.endswith('.h5'):
+        model.init()
+        model.load_weights(weights_path, by_name=True)
+    else:
+        raise Exception('Unknown checkpoint format')
 
     # prepare static particles
     walls = []
@@ -228,7 +235,7 @@ def main():
 
     os.makedirs(args.output)
 
-    if args.weights.endswith('.h5'):
+    if args.weights.endswith('.h5') or args.weights.endswith('.index'):
         return run_sim_tf(trainscript_module, args.weights, scene,
                           args.num_steps, args.output, args)
     elif args.weights.endswith('.pt'):
