@@ -8,7 +8,7 @@ We show how to train particle-based fluid simulation networks as CNNs using
 continuous convolutions. The code allows you to generate data, train your own 
 model or just run a pretrained model.
 
-<p align="center"> <img src="images/canyon.gif" alt="canyon video"> </p>
+[//]: # (<p align="center"> <img src="images/canyon.gif" alt="canyon video"> </p>)
 
 Please cite our paper [(pdf)](https://openreview.net/pdf?id=B1lDoJSYDH) if you find this code useful:
 ```
