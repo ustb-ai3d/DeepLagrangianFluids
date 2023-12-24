@@ -1,6 +1,8 @@
 """Config file that stores the paths to the SPlisHSPlasH binaries """
+import os
+
 # Set this variable to the path of the DynamicBoundarySimulator binary
-SIMULATOR_BIN = None
+SIMULATOR_BIN = '~/dlf_deps/SPlisHSPlasH-2.4.0/bin/DynamicBoundarySimulator'
 
 if SIMULATOR_BIN is None:
     raise ValueError(
@@ -13,7 +15,7 @@ def _set_splishsplash_bin_paths(simulator_bin_path):
     Throws an exception if the binary names do not match the expected names.
     On success sets the respective module vars to the expected paths.
     """
-    import os
+    simulator_bin_path = os.path.expanduser(simulator_bin_path)  # Add this line to expand '~'
     bin_dir = os.path.dirname(simulator_bin_path)
 
     simulator_bin_name, extension = os.path.splitext(
