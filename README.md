@@ -22,6 +22,41 @@ Please cite our paper [(pdf)](https://openreview.net/pdf?id=B1lDoJSYDH) if you f
 
 To stay informed about updates we recommend to watch this repository.
 
+## Environment
+
+To ensure a consistent and easy-to-setup environment for running and developing this project, we provide a Docker-based solution. Docker allows you to encapsulate the project's environment and dependencies in a container, which can be run on any system that supports Docker, thereby avoiding common issues related to dependencies and platform-specific configurations.
+
+### Setting Up the Docker Environment
+
+1. **Building the Docker Image**: 
+   Start by building a Docker image from the Dockerfile located in the root directory of the repository. This Dockerfile contains all the necessary instructions to create an environment that meets the requirements listed in the Dependencies section. Use the following command from the root of the repository to build the Docker image:
+
+   ```bash
+   docker build -t lagrangian-fluid-simulation .
+   ```
+
+   This command creates a Docker image named `lagrangian-fluid-simulation` based on the specifications in the Dockerfile.
+
+2. **Starting the Docker Container**:
+   Once the image is built, you can start a container from this image. The container is an instance of the image, providing an isolated environment for running your project. To start the container, run:
+
+   ```bash
+   docker run -it --name lfs-container lagrangian-fluid-simulation
+   ```
+
+   This command starts a new container named `lfs-container` from the `lagrangian-fluid-simulation` image and provides an interactive terminal to work with.
+
+3. **Installing Additional Dependencies**:
+   Inside the Docker container, you might need to install additional dependencies specific to your project or for further development. To do this, run the `deps.sh` script located in the repository's root directory:
+
+   ```bash
+   ./deps.sh
+   ```
+
+   Ensure that this script is executable (`chmod +x deps.sh` if necessary). This script should handle the installation of any additional dependencies that are not covered by the Dockerfile.
+
+By following these steps, you will have a Docker container that provides a consistent and isolated environment for working with the Lagrangian Fluid Simulation project, as outlined in the Dependencies section.
+
 ## Dependencies
 
 - Tensorflow 2.3 or PyTorch 1.6
