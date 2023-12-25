@@ -250,7 +250,7 @@ def evaluate_whole_sequence_torch(model,
     return result
 
 
-def eval_checkpoint(checkpoint_path, val_files, fluid_errors, options, cfg):
+def eval_checkpoint(checkpoint_path, val_files, fluid_errors, options, cfg, trainscript):
     val_dataset = read_data_val(files=val_files, window=1, cache_data=True)
 
     if checkpoint_path.endswith('.index'):
@@ -345,7 +345,6 @@ def main():
     with open(args.cfg, 'r') as f:
         cfg = yaml.safe_load(f)
 
-    global trainscript
     module_name = os.path.splitext(os.path.basename(args.trainscript))[0]
     sys.path.append('.')
     trainscript = importlib.import_module(module_name)
@@ -365,7 +364,7 @@ def main():
             fluid_errors.load(output_path)
         else:
             fluid_errors = FluidErrors()
-            eval_checkpoint(args.weights, val_files, fluid_errors, args, cfg)
+            eval_checkpoint(args.weights, val_files, fluid_errors, args, cfg, trainscript)
             fluid_errors.save(output_path)
     else:
         # get a list of checkpoints
@@ -396,7 +395,7 @@ def main():
         else:
             print('evaluating :', checkpoint)
             fluid_errors = FluidErrors()
-            eval_checkpoint(checkpoint[1], val_files, fluid_errors, args, cfg)
+            eval_checkpoint(checkpoint[1], val_files, fluid_errors, args, cfg, trainscript)
             fluid_errors.save(output_path)
 
     print_errors(fluid_errors)
